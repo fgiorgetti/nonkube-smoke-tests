@@ -1,5 +1,5 @@
 - name: Enabling podman endpoint
   ansible.builtin.command: "{{ item }}"
   loop: "{{ ce_commands }}"
-  register: _ce_command
-  changed_when: not _ce_command.failed
+  register: run_ce_command
+  changed_when: not run_ce_command.failed

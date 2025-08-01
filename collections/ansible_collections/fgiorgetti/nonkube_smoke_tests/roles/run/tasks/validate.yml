@@ -3,7 +3,7 @@
     url: http://127.0.0.1:8080/api/hello
     method: POST
     body: '{"name": "Ansible"}'
-  register: _result
-  until: _result.status == 200
+  register: run_result
+  until: run_result.status == 200
   retries: 10
   delay: 6

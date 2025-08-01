@@ -36,8 +36,8 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
-  register: _bootstrap
-  changed_when: not _bootstrap.failed
+  register: run_bootstrap
+  changed_when: not run_bootstrap.failed
 
 - name: Copying link to east site
   ansible.builtin.copy:
@@ -58,5 +58,5 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
-  register: _bootstrap
-  changed_when: not _bootstrap.failed
+  register: run_bootstrap
+  changed_when: not run_bootstrap.failed

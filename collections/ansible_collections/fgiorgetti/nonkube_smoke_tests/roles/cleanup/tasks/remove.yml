@@ -23,5 +23,5 @@
     loop_var: ns
   retries: 3
   delay: 5
-  register: _remove
-  changed_when: not _remove.failed
+  register: cleanup_remove
+  changed_when: not cleanup_remove.failed
