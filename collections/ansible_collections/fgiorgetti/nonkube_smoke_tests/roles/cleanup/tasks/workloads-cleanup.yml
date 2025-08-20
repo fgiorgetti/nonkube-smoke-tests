@@ -1,11 +1,24 @@
-- name: Stop and remove the frontend application
-  community.general.docker_container:
-    name: frontend
-    state: absent
-    force_kill: true
+- block:
+    - name: Stop and remove the frontend application using docker
+      community.general.docker_container:
+        name: frontend
+        state: absent
+        force_kill: true
 
-- name: Stop and remove the backend application
-  community.general.docker_container:
-    name: backend
-    state: absent
-    force_kill: true
+    - name: Stop and remove the backend application using docker
+      community.general.docker_container:
+        name: backend
+        state: absent
+        force_kill: true
+  rescue:
+    - name: Stop and remove the frontend application using podman
+      containers.podman.podman_container:
+        name: frontend
+        state: absent
+        force_delete: true
+
+    - name: Stop and remove the backend application using podman
+      containers.podman.podman_container:
+        name: backend
+        state: absent
+        force_delete: true
