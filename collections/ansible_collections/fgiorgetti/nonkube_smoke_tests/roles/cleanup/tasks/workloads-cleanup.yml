@@ -1,4 +1,5 @@
-- block:
+- name: Cleanup workloads
+  block:
     - name: Stop and remove the frontend application using docker
       community.general.docker_container:
         name: frontend
