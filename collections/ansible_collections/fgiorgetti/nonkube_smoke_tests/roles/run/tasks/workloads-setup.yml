@@ -1,19 +1,41 @@
-- name: Running the frontend application
-  community.general.docker_container:
-    name: frontend
-    recreate: true
-    auto_remove: true
-    published_ports:
-      - "127.0.0.1:7070:8080"
-    image: quay.io/skupper/hello-world-frontend
-    command:
-      - "--backend=http://host.containers.internal:8080"
+- name: Running the workloads as containers
+  block:
+    - name: Running the frontend application using docker
+      community.general.docker_container:
+        name: frontend
+        recreate: true
+        auto_remove: true
+        published_ports:
+          - "127.0.0.1:7070:8080"
+        image: quay.io/skupper/hello-world-frontend
+        command:
+          - "--backend=http://host.containers.internal:8080"
 
-- name: Running the backend application
-  community.general.docker_container:
-    name: backend
-    recreate: true
-    auto_remove: true
-    published_ports:
-      - "127.0.0.1:9090:8080"
-    image: quay.io/skupper/hello-world-backend
+    - name: Running the backend application using docker
+      community.general.docker_container:
+        name: backend
+        recreate: true
+        auto_remove: true
+        published_ports:
+          - "127.0.0.1:9090:8080"
+        image: quay.io/skupper/hello-world-backend
+  rescue:
+    - name: Running the frontend application using podman
+      containers.podman.podman_container:
+        name: frontend
+        recreate: true
+        rm: true
+        ports:
+          - "127.0.0.1:7070:8080"
+        image: quay.io/skupper/hello-world-frontend
+        command:
+          - "--backend=http://host.containers.internal:8080"
+
+    - name: Running the backend application
+      containers.podman.podman_container:
+        name: backend
+        recreate: true
+        rm: true
+        ports:
+          - "127.0.0.1:9090:8080"
+        image: quay.io/skupper/hello-world-backend
