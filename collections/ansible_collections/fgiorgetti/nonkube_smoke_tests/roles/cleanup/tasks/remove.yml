@@ -15,7 +15,7 @@
     argv: "{{ cleanup_command + [ns] }}"
     chdir: "hello-world"
   environment:
-    SKUPPER_PLATFORM: "podman"
+    SKUPPER_PLATFORM: "{{ run_platform | default('podman') }}"
   loop:
     - "east"
     - "west"
