@@ -1,0 +1,5 @@
+---
+matrix:
+  - { command: ["skupper", "system", "start"], remove: ["skupper", "system", "stop", "-n"], platform: "podman" }
+ce_commands:
+  - systemctl enable --now podman.socket
