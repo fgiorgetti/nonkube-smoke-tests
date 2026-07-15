@@ -1,0 +1,4 @@
+---
+matrix:
+  - { command: ["skupper", "system", "start"], remove: ["skupper", "system", "stop", "-n"], platform: "linux" }
+ce_commands: []
