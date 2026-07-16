@@ -11,6 +11,7 @@
         url: "{{ run_cli_url }}"
         dest: "{{ cli_archive_tmp.path }}"
         mode: '0644'
+        force: true
 
     - name: Unarchive the CLI
       ansible.builtin.unarchive:
