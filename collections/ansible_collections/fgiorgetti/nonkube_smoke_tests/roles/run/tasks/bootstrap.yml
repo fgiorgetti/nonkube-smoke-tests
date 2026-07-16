@@ -15,6 +15,7 @@
     - name: Unarchive the CLI
       ansible.builtin.unarchive:
         src: "{{ cli_archive_tmp.path }}"
+        remote_src: true
         dest: hello-world/
         mode: '0755'
 
