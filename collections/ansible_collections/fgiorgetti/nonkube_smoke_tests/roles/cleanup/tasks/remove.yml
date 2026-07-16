@@ -15,7 +15,7 @@
     argv: "{{ cleanup_command + [ns] }}"
     chdir: "hello-world"
   environment:
-    SKUPPER_PLATFORM: "{{ run_platform }}"
+    SKUPPER_PLATFORM: "{{ cleanup_platform }}"
   loop:
     - "east"
     - "west"

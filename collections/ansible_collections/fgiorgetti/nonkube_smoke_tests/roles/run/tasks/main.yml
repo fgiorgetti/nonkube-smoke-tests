@@ -1,3 +1,7 @@
+- name: Set cleanup platform fact
+  ansible.builtin.set_fact:
+    cleanup_platform: "{{ run_platform }}"
+
 - name: Starting smoke test using {{ run_command + [' with ', run_platform] }}
   ansible.builtin.debug:
     msg: "Starting smoke test using {{ run_command + [' with ', run_platform] }}"
