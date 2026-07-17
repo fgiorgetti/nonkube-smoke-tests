@@ -16,6 +16,7 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ cleanup_platform }}"
+    DOCKER_HOST: "{{ DOCKER_HOST | default(omit) }}"
   loop:
     - "east"
     - "west"
