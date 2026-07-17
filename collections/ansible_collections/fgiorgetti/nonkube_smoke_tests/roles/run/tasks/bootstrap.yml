@@ -57,6 +57,7 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
+    DOCKER_HOST: "{{ DOCKER_HOST | default(omit) }}"
   register: run_bootstrap
   changed_when: not run_bootstrap.failed
 
@@ -79,5 +80,6 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
+    DOCKER_HOST: "{{ DOCKER_HOST | default(omit) }}"
   register: run_bootstrap
   changed_when: not run_bootstrap.failed
