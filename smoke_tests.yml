@@ -20,6 +20,10 @@
           ansible.builtin.include_role:
             name: fgiorgetti.nonkube_smoke_tests.cleanup
 
+        - name: Re-raise original failure
+          ansible.builtin.fail:
+            msg: "{{ ansible_failed_task.name }}: {{ ansible_failed_result.msg | default(ansible_failed_result.stderr | default('unknown error')) }}"
+
 - name: Nonkube smoke test as root
   hosts: rootful
   environment:
@@ -40,3 +44,7 @@
         - name: Cleanup rootful smoke tests
           ansible.builtin.include_role:
             name: fgiorgetti.nonkube_smoke_tests.cleanup
+
+        - name: Re-raise original failure
+          ansible.builtin.fail:
+            msg: "{{ ansible_failed_task.name }}: {{ ansible_failed_result.msg | default(ansible_failed_result.stderr | default('unknown error')) }}"

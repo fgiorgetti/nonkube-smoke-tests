@@ -1,10 +1,31 @@
-- name: Download and unarchive the CLI
-  ansible.builtin.unarchive:
-    src: "{{ run_cli_url }}"
-    dest: hello-world/
-    remote_src: true
-    mode: '0755'
+- name: Download and install the CLI
   when: not ('' == run_cli_url)
+  block:
+    - name: Create a temporary file for the CLI archive
+      ansible.builtin.tempfile:
+        suffix: ".tar.gz"
+      register: cli_archive_tmp
+
+    - name: Download the CLI archive
+      ansible.builtin.get_url:
+        url: "{{ run_cli_url }}"
+        dest: "{{ cli_archive_tmp.path }}"
+        mode: '0644'
+        force: true
+
+    - name: Unarchive the CLI
+      ansible.builtin.unarchive:
+        src: "{{ cli_archive_tmp.path }}"
+        remote_src: true
+        dest: hello-world/
+        mode: '0755'
+
+  always:
+    - name: Remove the temporary CLI archive
+      ansible.builtin.file:
+        path: "{{ cli_archive_tmp.path }}"
+        state: absent
+      when: cli_archive_tmp is defined
 
 - name: Download bootstrap.sh
   ansible.builtin.get_url:
@@ -36,6 +57,7 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
+    DOCKER_HOST: "{{ DOCKER_HOST | default(omit) }}"
   register: run_bootstrap
   changed_when: not run_bootstrap.failed
 
@@ -58,5 +80,6 @@
     chdir: "hello-world"
   environment:
     SKUPPER_PLATFORM: "{{ run_platform }}"
+    DOCKER_HOST: "{{ DOCKER_HOST | default(omit) }}"
   register: run_bootstrap
   changed_when: not run_bootstrap.failed
