@@ -1,4 +1,6 @@
 ---
 matrix:
   - { command: ["skupper", "system", "start"], remove: ["skupper", "system", "stop", "-n"], platform: "linux" }
-ce_commands: []
+ce_commands:
+  # This is required for the frontend/backend apps, not Skupper itself
+  - systemctl --user enable --now podman.socket
