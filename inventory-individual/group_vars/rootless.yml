@@ -1,0 +1,3 @@
+---
+ansible_user: "{{ rootless_ansible_user | default('ci') }}"
+skupper_home: "/home/{{ ansible_user }}/.local/share/skupper"
